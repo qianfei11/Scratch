@@ -2,3 +2,7 @@
 	path = linux
 	url = git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
 	branch = linux-5.4.y
+[submodule "qemu"]
+	path = qemu
+	url = https://gitlab.com/qemu-project/qemu.git
+	branch = stable-6.1

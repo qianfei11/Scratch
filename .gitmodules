@@ -6,3 +6,7 @@
 	path = qemu
 	url = https://gitlab.com/qemu-project/qemu.git
 	branch = stable-6.1
+[submodule "busybox"]
+	path = busybox
+	url = https://git.busybox.net/busybox.git
+	branch = 1_31_stable

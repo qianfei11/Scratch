@@ -51,7 +51,7 @@ $ chmod +x etc/init.d/rcS
 ```
 
 ```bash
-$ find . | cpio -o --format=newc > ../rootfs.img
+$ find . | cpio -o --format=newc > ../../rootfs.img
 ```
 
 ## Linux
@@ -62,6 +62,10 @@ $ make defconfig ARCH=arm64
 
 ```bash
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bzImage -j`nproc`
+```
+
+```bash
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- scripts_gdb -j`nproc`
 ```
 
 ## QEMU
@@ -75,5 +79,6 @@ $ make -j`nproc`
 ## Run
 
 ```bash
-$ ./qemu/build/qemu-system-aarch64 -m 512M -smp 4 -cpu cortex-a57 -machine virt -kernel ./linux/arch/arm64/boot/Image -initrd ./busybox/rootfs.img -append "rdinit=/linuxrc nokaslr console=ttyAMA0 loglevel=8" -nographic -s
+$ ./run.sh
+$ ./run.sh -trace "smmuv3_*"
 ```

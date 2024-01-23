@@ -1,0 +1,42 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "kernel debug",
+        "type": "cppdbg",
+        "request": "launch",
+        "preLaunchTask": "vm",
+        "program": "${workspaceRoot}/linux/vmlinux",
+        "miDebuggerPath": "/usr/bin/gdb-multiarch",
+        "miDebuggerServerAddress": "localhost:1234",
+        "args": [],
+        "stopAtEntry": true,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerArgs": "-n",
+        "setupCommands": [
+          {
+            "text": "set arch aarch64",
+            "ignoreFailures": false
+          },
+          {
+            "text": "dir .",
+            "ignoreFailures": false
+          },
+          {
+            "text": "add-auto-load-safe-path ./linux/vmlinux-gdb.py",
+            "ignoreFailures": false
+          },
+          {
+            "text": "-enable-pretty-printing",
+            "ignoreFailures": true
+          }
+        ]
+      }
+    ]
+  }

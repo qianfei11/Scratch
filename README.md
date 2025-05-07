@@ -2,12 +2,7 @@
 
 Build a debuggable os from scratch (AArch64).
 
-```bash
-$ git clone ...
-$ git submodule init --update --recursive
-```
-
-## BusyBox
+## BusyBox (`busybox-1.36.1`)
 
 Enable `building static binary (no shared libs)`:
 
@@ -17,11 +12,7 @@ CONFIG_STATIC=y
 # CONFIG_FEATURE_LIBBUSYBOX_STATIC is not set
 ```
 
-Since `stime()` has been deprecated in glibc 2.31 and replaced with `clock_settime()`, we need to apply this patch to busybox:
-
-```bash
-$ git apply ../replace-stime-with-clock_settime.patch
-```
+Compilation:
 
 ```bash
 $ export ARCH=arm64
@@ -30,55 +21,60 @@ $ make -j`nproc`
 $ make install -j`nproc`
 ```
 
-```bash
-$ cd _install
-$ mkdir -p proc sys dev etc/init.d
-```
+Configuration:
 
 ```bash
-$ cat etc/init.d/rcS
+$ cd _install
+$ mkdir -pv {etc,proc,sys,usr/{bin,sbin}}
+```
+
+Edit `init` script:
+
+```bash
 #!/bin/sh
-echo "INIT SCRIPT"
-mkdir /tmp
+
 mount -t proc none /proc
 mount -t sysfs none /sys
 mount -t devtmpfs none /dev
-mount -t debugfs none /sys/kernel/debug
-mount -t tmpfs none /tmp
-echo -e "Boot took $(cut -d' ' -f1 /proc/uptime) seconds"
-setsid /bin/cttyhack setuidgid 0 /bin/sh
-$ chmod +x etc/init.d/rcS
+
+echo -e "\nBoot took $(cut -d' ' -f1 /proc/uptime) seconds\n"
+
+exec /bin/sh
 ```
 
+Pack the filesystem:
+
 ```bash
-$ find . | cpio -o --format=newc > ../../rootfs.img
+$ find . -print0 | cpio --null -ov --format=newc | gzip > ../initramfs.cpio.gz
 ```
 
-## Linux
+## Linux (`linux-6.13.7`)
+
+Enable the tiny configuration and compilation:
 
 ```bash
-$ make defconfig ARCH=arm64
-```
-
-```bash
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- tinyconfig
+# Or directly `cp ./linux-config ./linux-6.13.7/.config`
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bzImage -j`nproc`
-```
-
-```bash
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- scripts_gdb -j`nproc`
 ```
 
-## QEMU
+## QEMU (`qemu-9.2.2`)
+
+Compilation:
 
 ```bash
 $ mkdir build/ && cd build/
-$ ../configure --target-list=x86_64-softmmu,x86_64-linux-user,arm-softmmu,arm-linux-user,aarch64-softmmu,aarch64-linux-user --enable-kvm
+$ ../configure --target-list=aarch64-softmmu --enable-debug --disable-docs
 $ make -j`nproc`
 ```
 
 ## Run
 
+Execute and debug the os:
+
 ```bash
+# ./gen_rootfs.sh
 $ ./run.sh
 $ ./run.sh -trace "smmuv3_*"
 ```

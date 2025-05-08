@@ -4,21 +4,22 @@ Build a debuggable os from scratch (AArch64).
 
 ## BusyBox (`busybox-1.36.1`)
 
-Enable `building static binary (no shared libs)`:
+Enable `building static binary (no shared libs)` and disable `tc`:
 
 ```bash
-$ cat .config | grep STATIC
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
+# Or directly `cp ./busybox.config ./busybox-1.36.1/.config`
+$ cat .config | grep CONFIG_STATIC
 CONFIG_STATIC=y
-# CONFIG_FEATURE_LIBBUSYBOX_STATIC is not set
+$ cat .config | grep CONFIG_TC
+# CONFIG_TC is not set
 ```
 
 Compilation:
 
 ```bash
-$ export ARCH=arm64
-$ export CROSS_COMPILE=aarch64-linux-gnu-
-$ make -j`nproc`
-$ make install -j`nproc`
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j`nproc`
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- install -j`nproc`
 ```
 
 Configuration:
@@ -54,7 +55,7 @@ Enable the tiny configuration and compilation:
 
 ```bash
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- tinyconfig
-# Or directly `cp ./linux-config ./linux-6.13.7/.config`
+# Or directly `cp ./linux.config ./linux-6.13.7/.config`
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bzImage -j`nproc`
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- scripts_gdb -j`nproc`
 ```

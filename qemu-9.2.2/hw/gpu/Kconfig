@@ -1,0 +1,3 @@
+config MALI_G71
+    bool
+    default y

@@ -1,0 +1,1 @@
+#define TYPE_MALI_GPU "mali-gpu"

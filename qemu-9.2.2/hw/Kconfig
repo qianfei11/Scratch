@@ -66,6 +66,8 @@ source sparc64/Kconfig
 source tricore/Kconfig
 source xtensa/Kconfig
 
+source gpu/Kconfig
+
 # Symbols used by multiple targets
 config TEST_DEVICES
     bool

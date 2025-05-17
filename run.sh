@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ./qemu-9.2.2/build/qemu-system-aarch64 \
+    -L ./qemu-9.2.2/pc-bios/ \
     -machine virt,iommu=smmuv3,gic-version=3,secure=on,virtualization=on \
     -cpu cortex-a76 \
     -smp 4 \

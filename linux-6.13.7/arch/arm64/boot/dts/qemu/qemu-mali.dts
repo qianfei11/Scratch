@@ -1,3 +1,5 @@
+/dts-v1/;
+
 /{
 	gpu: mali@E82C0000 {
 		compatible = "arm,malit6xx", "arm,mali-midgard";
@@ -5,7 +7,6 @@
 		reg = <0x0 0xE82C0000 0x0 0x4000>;
 		interrupts = <0 258 4 0 259 4 0 260 4>;
 		interrupt-names = "JOB", "MMU", "GPU";
-		clocks = <&stub_clock HI3660_CLK_STUB_GPU>;
 		operating-points = <
 			/* <frequency> <voltage>*/
 			178000  650000

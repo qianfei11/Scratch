@@ -396,4 +396,7 @@ config ARCH_ZYNQMP
 	help
 	  This enables support for Xilinx ZynqMP Family
 
+config ARCH_QEMU_MALI_G71
+	bool "QEMU Mali G71 Virtual Device"
+
 endmenu # "Platform selection"

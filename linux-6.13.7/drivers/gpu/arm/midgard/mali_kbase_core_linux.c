@@ -706,7 +706,7 @@ static int kbase_open(struct inode *inode, struct file *filp)
 	}
 
 	filp->private_data = kfile;
-	filp->f_mode |= FMODE_UNSIGNED_OFFSET;
+	filp->f_mode |= FOP_UNSIGNED_OFFSET;
 
 	return 0;
 
@@ -5791,18 +5791,13 @@ void kbase_sysfs_term(struct kbase_device *kbdev)
 	put_device(kbdev->dev);
 }
 
-static int kbase_platform_device_remove(struct platform_device *pdev)
+static void kbase_platform_device_remove(struct platform_device *pdev)
 {
 	struct kbase_device *kbdev = to_kbase_device(&pdev->dev);
-
-	if (!kbdev)
-		return -ENODEV;
 
 	kbase_device_term(kbdev);
 	dev_set_drvdata(kbdev->dev, NULL);
 	kbase_device_free(kbdev);
-
-	return 0;
 }
 
 void kbase_backend_devfreq_term(struct kbase_device *kbdev)
@@ -5829,6 +5824,8 @@ static int kbase_platform_device_probe(struct platform_device *pdev)
 {
 	struct kbase_device *kbdev;
 	int err = 0;
+
+	dev_err(&pdev->dev, "Probing mali device\n");
 
 	mali_kbase_print_cs_experimental();
 

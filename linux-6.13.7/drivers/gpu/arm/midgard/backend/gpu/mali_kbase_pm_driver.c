@@ -3393,8 +3393,7 @@ static int kbase_pm_do_reset(struct kbase_device *kbdev)
 	rtdata.timed_out = false;
 
 	/* Create a timer to use as a timeout on the reset */
-	hrtimer_init_on_stack(&rtdata.timer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-	rtdata.timer.function = kbasep_reset_timeout;
+	hrtimer_setup_on_stack(&rtdata.timer, kbasep_reset_timeout, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
 
 	hrtimer_start(&rtdata.timer, HR_TIMER_DELAY_MSEC(RESET_TIMEOUT), HRTIMER_MODE_REL);
 

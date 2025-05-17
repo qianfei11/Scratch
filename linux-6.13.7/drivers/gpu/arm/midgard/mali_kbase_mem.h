@@ -907,10 +907,7 @@ static inline struct kbase_mem_phy_alloc *kbase_alloc_create(struct kbase_contex
 		return ERR_PTR(-ENOMEM);
 
 	/* Allocate based on the size to reduce internal fragmentation of vmem */
-	if (alloc_size > KBASE_MEM_PHY_ALLOC_LARGE_THRESHOLD)
-		alloc = vmalloc(alloc_size);
-	else
-		alloc = kmalloc(alloc_size, GFP_KERNEL);
+	alloc = kvmalloc(alloc_size, GFP_KERNEL);
 
 	if (!alloc)
 		return ERR_PTR(-ENOMEM);

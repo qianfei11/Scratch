@@ -55,6 +55,7 @@ Enable the tiny configuration and compilation:
 
 ```bash
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- tinyconfig
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 # Or directly `cp ./linux.config ./linux-6.13.7/.config`
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image qemu/qemu-mali.dtb -j`nproc`
 $ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- scripts_gdb -j`nproc`

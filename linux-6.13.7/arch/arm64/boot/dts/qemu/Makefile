@@ -1,0 +1,1 @@
+dtb-$(CONFIG_ARCH_QEMU_MALI_G71) += qemu-mali.dtb

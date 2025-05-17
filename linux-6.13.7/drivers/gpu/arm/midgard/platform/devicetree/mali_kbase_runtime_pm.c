@@ -77,7 +77,6 @@ static void disable_gpu_power_control(struct kbase_device *kbdev)
 static int pm_callback_power_on(struct kbase_device *kbdev)
 {
 	int ret = 1; /* Assume GPU has been powered off */
-	int error;
 	unsigned long flags;
 
 	dev_dbg(kbdev->dev, "%s %pK\n", __func__, (void *)kbdev->dev->pm_domain);

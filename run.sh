@@ -3,7 +3,7 @@
 ./qemu-9.2.2/build/qemu-system-aarch64 \
     -L ./qemu-9.2.2/pc-bios/ \
     -machine virt,iommu=smmuv3,gic-version=3,secure=on,virtualization=on \
-    -cpu cortex-a76 \
+    -cpu cortex-a76,pmu=on \
     -smp 4 \
     -m 512M \
     -kernel ./linux-6.13.7/arch/arm64/boot/Image \

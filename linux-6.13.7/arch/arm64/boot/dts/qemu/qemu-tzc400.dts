@@ -1,0 +1,13 @@
+/t {
+    soc {
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        tzc@f8f00000 {
+            compatible = "arm,tzc-400";
+            reg = <0x0 0xf8f00000 0x0 0x1000>;
+            interrupt-names = "err";
+            interrupts = <0 29 4>; /* adjust to the GIC SPI number you connect to */
+        };
+    };
+};

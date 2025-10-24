@@ -135,6 +135,9 @@ static Property mali_gpu_properties[] = {
 static void mali_gpu_class_init(ObjectClass *klass, void *data)
 {
     DeviceClass *dc = DEVICE_CLASS(klass);
+
+    dc->user_creatable = true;
+    dc->hotpluggable = false;
     dc->realize = mali_gpu_realize;
     dc->vmsd = &vmstate_mali_gpu;
     device_class_set_props(dc, mali_gpu_properties);
@@ -144,13 +147,13 @@ static const TypeInfo mali_gpu_info = {
     .name = TYPE_MALI_GPU,
     .parent = TYPE_SYS_BUS_DEVICE,
     .instance_size = sizeof(MaliGPUState),
-    .class_init = mali_gpu_class_init,
     .instance_init = mali_gpu_init,
+    .class_init = mali_gpu_class_init,
 };
 
 static void mali_gpu_register_types(void)
 {
-    type_register_static(&mali_gpu_info);
+    type_register(&mali_gpu_info);
 }
 
 type_init(mali_gpu_register_types);
